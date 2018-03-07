@@ -1,0 +1,88 @@
+#page-content.container-fluid
+  %br/
+  %br/
+  .row
+    .col-md
+    .col-md-10
+      %h1
+        Exercise one
+        %small Currency rates and CPM
+
+      %p.lead
+        This exercise aims to manipulate
+        %i APIs, CSV, and Currency rates.
+      %hr.my-4
+      %p
+        Below, there is a form that allows you to upload a CSV file to the
+        %mark transform
+        endpoint of the
+        %mark ExerciseOneController
+        \.
+        %br/
+        Here is an example input CSV and download link:
+      .row
+        .col-md
+          %p.text-center
+            %table.table.table-sm.table-striped.table-bordered
+              %caption
+                = link_to 'Download the input CSV', exercise_one_download_sample_path, class: 'btn btn-primary'
+                (right click, save as)
+              %thead.thead-dark
+                %th Buyer
+                %th Impressions
+                %th Revenue
+              %tbody
+                %tr
+                  %td Coca Cola
+                  %td 123864
+                  %td 12.5
+                %tr
+                  %td Nike
+                  %td 8752
+                  %td 5.3
+                %tr
+                  %td ...
+                  %td ...
+                  %td ...
+        .col-md
+      %hr.my-4
+      %h2 What you must do
+      %p
+        You must implement the
+        %mark transform
+        action.
+        %ul
+          %li It takes as input the CSV file, and a currency code.
+          %li It must parse the CSV.
+          %li It must add the CPM column.
+          %li
+            CPM is the
+            %i cost per 1000 impressions.
+            %mark CPM = (Impressions / 1000) / Revenue
+          %li
+            Use
+            = link_to 'fixer.io', target: '_blank'
+            to convert the Revenue and CPM numbers into USD value.
+          %li
+            Send the result as a CSV (like on the
+            %mark download_sample
+            endpoint)
+        Once you think it works for you, you can open a pull request on our github repository, so we can review your code.
+      %blockquote.blockquote.text-center
+        %p Bonus: Make nice code, write some unit tests... Show us what you can do !
+      %hr.my-4
+      %h2 Form
+      = form_tag(:exercise_one_transform, remote: true, method: :post, multipart: true, authenticity_token: true) do
+        .form-group
+          %label Input file:
+          %br/
+          = file_field_tag :file, accept: 'text/csv'
+        .form-group
+          %label Input currency code:
+          %br/
+          = select_tag :currency_code, options_for_select(@currency_codes)
+        %button.btn.btn-primary{ type: 'submit' }
+          Transform
+      %br/
+      %br/
+    .col-md
